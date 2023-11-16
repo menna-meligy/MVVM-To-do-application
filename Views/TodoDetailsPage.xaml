@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="TodoXaml.Views.TodoDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TodoXaml.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <CommandBar Grid.Row="0" Style="{StaticResource HeaderCommandBarStyle}" Content="Details">
+                <AppBarButton Icon="Save" Label="Save" Click="Save_Click"/>
+            </CommandBar>
+
+            <StackPanel Grid.Row="1" Margin="12,0" MaxWidth="320" HorizontalAlignment="Left">
+                <CheckBox Content="Done?"
+                          IsChecked="{Binding Todo.IsDone, Mode=TwoWay}"
+                          Margin="0,12,0,12"/>
+                <TextBox Header="Cím"
+                         Text="{Binding Todo.Title, Mode=TwoWay}"
+                         Margin="0,0,0,12"/>
+                <TextBox Header="Description"
+                         Text="{Binding Todo.Description, Mode=TwoWay}"
+                         Height="150"
+                         AcceptsReturn="True"
+                         Margin="0,0,0,12"/>
+                <ComboBox Header="Priorities"
+                          ItemsSource="{Binding PriorityValues}"
+                          SelectedItem="{Binding Todo.Priority, Mode=TwoWay}"
+                          Margin="0,0,0,12"
+                          HorizontalAlignment="Stretch"/>
+                <DatePicker Header="Deadline"
+                            Date="{Binding Todo.Deadline, Mode=TwoWay}"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

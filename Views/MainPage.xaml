@@ -1,0 +1,45 @@
+﻿<Page
+    x:Class="TodoXaml.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TodoXaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:c="using:TodoXaml.Converters"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <c:TodoPriorityToBrushConverter x:Key="PriorityToBrushConverter" 
+                                        HighPriorityBrush="IndianRed" 
+                                        NormalPriorityBrush="Transparent" 
+                                        LowPriorityBrush="LightBlue"/>
+        <c:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0" Style="{StaticResource HeaderCommandBarStyle}" Content="ToDos">
+            <AppBarButton Icon="Add" Label="Add" Click="AddButton_Click"/>
+        </CommandBar>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Todos}" ItemClick="Todos_OnItemClick" IsItemClickEnabled="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Background="{Binding Priority, Converter={StaticResource PriorityToBrushConverter}}">
+                        <Grid>
+                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold"/>
+                            <SymbolIcon HorizontalAlignment="Right" Symbol="Accept" 
+                                        Visibility="{Binding IsDone, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </Grid>
+                        <TextBlock Text="{Binding Deadline}"/>
+                        <Button Content="Add" Command="{Binding AddCommand}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
